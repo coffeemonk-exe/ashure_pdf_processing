@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Upload</title>
+</head>
+<body>
+    <h1>Upload PDF files</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="pdf_files" multiple>
+        <button type="submit">Upload</button>
+    </form>
+    <br>
+    {% if output_for_labels and output_for_invoices %}
+        <button onclick="downloadMerged()">Download files</button>
+    {% endif %}
+    
+    <script>
+        function downloadMerged() {
+            const labelsURL = '{{ output_for_labels.url }}';
+            const invoicesURL = '{{ output_for_invoices.url }}';
+
+            const linkLabels = document.createElement('a');
+            linkLabels.href = labelsURL;
+            linkLabels.download = 'Labels.pdf';
+            linkLabels.click();
+
+            const linkInvoices = document.createElement('a');
+            linkInvoices.href = invoicesURL;
+            linkInvoices.download = 'Invoices.pdf';
+            linkInvoices.click();
+        }
+    </script>
+</body>
+</html>
+

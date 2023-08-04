@@ -17,8 +17,8 @@
     
     <script>
         function downloadMerged() {
-            const labelsURL = '{{ output_for_labels.url }}';
-            const invoicesURL = '{{ output_for_invoices.url }}';
+            const labelsURL = '{{ output_for_labels }}';
+            const invoicesURL = '{{ output_for_invoices }}';
 
             const linkLabels = document.createElement('a');
             linkLabels.href = labelsURL;

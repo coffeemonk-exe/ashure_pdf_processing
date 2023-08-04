@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pdf_processing_app',
+    'pdf_processing_app.apps.PdfProcessingAppConfig',
 ]
 
 MIDDLEWARE = [

@@ -4,6 +4,7 @@ from django.shortcuts import render
 import os
 import PyPDF2
 import tempfile
+from urllib.parse import urljoin
 from django.conf import settings
 from django.http import HttpResponse, FileResponse
 from django.shortcuts import render
@@ -58,7 +59,7 @@ def mergeAndCrop(uploaded_files):
     with open(invoices_filepath, 'wb') as invoices_file:
         outputForInvoices.write(invoices_file)
 
-    return labels_filepath, invoices_filepath
+    return labels_filename, invoices_filename
 
 def upload_pdf(request):
     if request.method == 'POST':
@@ -66,11 +67,11 @@ def upload_pdf(request):
 
         if uploaded_files:
             # Process the uploaded PDFs
-            labels_filepath, invoices_filepath = mergeAndCrop(uploaded_files)
+            labels_filename, invoices_filename = mergeAndCrop(uploaded_files)
 
             return render(request, 'upload.html', {
-                'output_for_labels': labels_filepath,
-                'output_for_invoices': invoices_filepath,
+                'output_for_labels': urljoin(settings.MEDIA_URL, labels_filename),
+                'output_for_invoices': urljoin(settings.MEDIA_URL, invoices_filename),
             })
 
     return render(request, 'upload.html')
